@@ -1,0 +1,3 @@
+<div class="carrier-list-container">
+    <a *ngFor="let carrier of carriers" routerLink="/{{carrier.id}}" class="carrier {{carrier.id}}"><img src="/assets/images/{{carrier.id}}.png"/></a>
+</div>

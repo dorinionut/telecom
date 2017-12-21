@@ -1,0 +1,70 @@
+@import (reference) '../../../mixins';
+@import (reference) '../../../variables';
+
+.plan-list-container {
+	width: 100%;
+
+  .top {
+    height: 30vh;
+    padding: @padding;
+    position: relative;
+
+    img {
+      border:3px solid fade(@color-background, 20%);
+      border-radius: 13px;
+      left: 50%;
+      max-height: 70px;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%,-50%);
+    }
+  }
+
+  h1 {
+    font-size: @font-size*2;
+    font-weight: normal;
+    padding: @padding*2 0;
+    text-align: center;
+
+    @media (max-width: @breakpoint-xs) {
+      font-size: @font-size*1.5;
+    }
+  }
+
+  .list {
+
+    .plan-holder {
+      -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+      align-items: stretch;
+      margin-bottom: @margin;
+
+      .plan {
+        border: 1px solid @color-border;
+        border-radius: 25px;
+        height: 100%;
+        padding: @padding @padding @padding*4;
+        position: relative;
+
+        .name {
+          font-size: @font-size*1.5;
+          font-weight: normal;
+        }
+
+        .monthly-cost {
+          color: fade(@color-text, 70%);
+          font-size: @font-size*1.125;
+        }
+
+        .buttons {
+          display: block;
+          bottom: @padding;
+          left: 0;
+          position: absolute;
+          width: 100%;
+        }
+      }
+    }
+
+  }
+}

@@ -1,0 +1,94 @@
+<div *ngIf="plan" class="checkout-container {{carrier?.id}}">
+  <div *ngIf="carrier?.id" class="top">
+    <img src="/assets/images/{{carrier?.id}}.png"/>
+  </div>
+  <div class="container-fluid cart">
+    <div class="row">
+      <div class="col-12 plan">
+        <div class="row">
+          <div class="col-9">
+            <div class="name">{{plan.name}}</div>
+            <span (click)="showPlanDetails = !showPlanDetails" class="details-toggler">{{showPlanDetails ? '- Hide plan details' : '+ Show plan details'}}</span>
+            <ul *ngIf="showPlanDetails" class="details">
+              <li *ngIf="plan?.minutes"><strong>{{plan?.minutes != -1 ? plan?.minutes : 'unlimited'}}</strong> minutes</li>
+              <li *ngIf="plan?.minutesIntl"><strong>{{plan?.minutesIntl != -1 ? plan?.minutesIntl : 'unlimited'}}</strong> international minutes</li>
+              <li *ngIf="plan?.sms"><strong>{{plan?.sms != -1 ? plan?.sms : 'unlimited'}}</strong> messages</li>
+              <li *ngIf="plan?.data"><strong>{{plan?.data != -1 ? plan?.data+' GB' : 'unlimited'}}</strong> internet data</li>
+              <li *ngIf="plan?.dataEES"><strong>{{plan?.dataEES != -1 ? plan?.dataEES+' GB' : 'unlimited'}}</strong> EES internet data</li>
+            </ul>
+          </div>
+          <div class="col-3"><div class="price">{{plan.monthlyCost}} EUR / month</div></div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+          </div>
+        </div>
+      </div>
+      <div *ngIf="option" class="col-12 option">
+        <div class="row">
+          <div class="col-9"><div class="name">{{option.name}}</div></div>
+          <div class="col-3"><div class="price">{{option.monthlyCost}} EUR / month</div></div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <span (click)="showOptionDetails = !showOptionDetails" class="details-toggler">{{showOptionDetails ? '- Hide option details' : '+ Show option details'}}</span>
+            <ul *ngIf="showOptionDetails" class="details">
+              <li *ngIf="option?.data" class="col-12"><strong>{{option?.data != -1 ? option?.data+' GB' : 'unlimited'}}</strong> internet data</li>
+              <li *ngIf="option?.dataEES" class="col-12"><strong>{{option?.dataEES != -1 ? option?.dataEES+' GB' : 'unlimited'}}</strong> EES internet data</li>
+              <li *ngIf="option?.cloudStorage" class="col-12"><strong>{{option?.cloudStorage != -1 ? option?.cloudStorage+' GB' : 'unlimited'}}</strong> Cloud Storage</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="total row">
+          <div class="col-9">TOTAL</div>
+          <div class="col-3">{{totalMonthlyCost}} EUR / month</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid personal-info">
+    <div class="row">
+      <div class="col-12">
+        <form [formGroup]="personalInfo">
+          <h1>Personal info</h1>
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-6">
+              <div class="form-group text">
+                <input [(ngModel)]="person.firstName" [attr.required]="false" type="text" id="first-name" class="form-control" formControlName="firstName">
+                <label for="first-name">First name</label>
+              </div>
+              <div [hidden]="personalInfo.controls.firstName.valid || personalInfo.controls.firstName.pristine" class="error-text">Please fill in first name</div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6">
+              <div class="form-group text">
+                <input [(ngModel)]="person.lastName" [attr.required]="false" type="text" id="last-name" class="form-control" formControlName="lastName">
+                <label for="last-name">Last name</label>
+              </div>
+              <div [hidden]="personalInfo.controls.lastName.valid || personalInfo.controls.lastName.pristine" class="error-text">Please fill in last name</div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6">
+              <div class="form-group text">
+                <input [(ngModel)]="person.email" [attr.required]="false" type="text" id="email" class="form-control" formControlName="email">
+                <label for="email">Email</label>
+              </div>
+              <div [hidden]="personalInfo.controls.email.valid || personalInfo.controls.email.pristine" class="error-text">Please fill in a valid email address</div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6">
+              <div class="form-group text">
+                <input [(ngModel)]="person.phone" [attr.required]="false" type="text" id="current-phone" class="form-control" formControlName="phone">
+                <label for="current-phone">Current phone number (optional)</label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <button (click)="submitOrder()" class="btn-primary float-right">Submit order</button>
+    <div class="name">{{plan.name}}</div>
+    <div class="option">{{option?.id ? '+ ' + option.name : 'with no add-on'}}</div>
+  </div>
+</div>

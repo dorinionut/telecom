@@ -1,0 +1,32 @@
+<div *ngIf="options?.length" class="option-list-container">
+  <h3>Available add-ons</h3>
+  <div class="row">
+    <div *ngFor="let option of options" class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+      <div (click)="selectOption(option.id)" [ngClass]="{selected: option?.id == selectedOptionID}" class="option">
+        <div class="checkbox"></div>
+        <h3 class="name">{{option?.name}}</h3>
+        <h4 class="monthly-cost">{{option?.monthlyCost}} EUR / month</h4>
+        <div class="row">
+          <div *ngIf="option?.data" class="col-12">
+            <div class="resource">
+              <div class="value">{{option?.data != -1 ? option?.data+' GB' : 'unlimited'}}</div>
+              <div class="label">internet data</div>
+            </div>
+          </div>
+          <div *ngIf="option?.dataEES" class="col-12">
+            <div class="resource">
+              <div class="value">{{option?.dataEES != -1 ? option?.dataEES+' GB' : 'unlimited'}}</div>
+              <div class="label">EES internet data</div>
+            </div>
+          </div>
+          <div *ngIf="option?.cloudStorage" class="col-12">
+            <div class="resource">
+              <div class="value">{{option?.cloudStorage != -1 ? option?.cloudStorage+' GB' : 'unlimited'}}</div>
+              <div class="label">Cloud Storage</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

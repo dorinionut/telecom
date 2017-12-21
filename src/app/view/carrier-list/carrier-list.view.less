@@ -1,0 +1,39 @@
+@import (reference) '../../../variables';
+
+.carrier-list-container {
+  height: ~'calc(100vh - ' @height-header ~')';
+
+  .carrier {
+    display: block;
+    height: 33.33333%;
+    position: relative;
+    text-align: center;
+    width: 100%;
+
+    .color(@carrier, @color) {
+      &.@{carrier}{
+        background-color: @color;
+      }
+    }
+
+    .color(orange, @color-orange);
+    .color(vodafone, @color-vodafone);
+    .color(telekom, @color-telekom);
+
+    img {
+      border-radius: 25px;
+      border:3px solid fade(@color-background, 20%);
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+
+      @media (max-width: @breakpoint-xs) {
+        border-radius: 13px;
+        max-height: 70px;
+        max-width: 70px;
+      }
+    }
+  }
+
+}

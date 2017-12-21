@@ -1,0 +1,51 @@
+<div class="plan-list-container {{carrierID}}">
+  <div class="top">
+    <img src="/assets/images/{{carrierID}}.png"/>
+  </div>
+  <div class="container-fluid">
+    <h1>Select your plan</h1>
+    <div *ngIf="plans?.length" class="row list">
+      <div *ngFor="let plan of plans" class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-3 plan-holder">
+        <div class="plan">
+          <h2 class="name">{{plan?.name}}</h2>
+          <h4 class="monthly-cost">{{plan?.monthlyCost}} EUR / month</h4>
+          <div class="row">
+            <div *ngIf="plan?.minutes" class="col-12">
+              <div class="resource">
+                <div class="value">{{plan?.minutes != -1 ? plan?.minutes : 'unlimited'}}</div>
+                <div class="label">minutes</div>
+              </div>
+            </div>
+            <div *ngIf="plan?.minutesIntl" class="col-12">
+              <div class="resource">
+                <div class="value">{{plan?.minutesIntl != -1 ? plan?.minutesIntl : 'unlimited'}}</div>
+                <div class="label">international minutes</div>
+              </div>
+            </div>
+            <div *ngIf="plan?.sms" class="col-12">
+              <div class="resource">
+                <div class="value">{{plan?.sms != -1 ? plan?.sms : 'unlimited'}}</div>
+                <div class="label">messages</div>
+              </div>
+            </div>
+            <div *ngIf="plan?.data" class="col-12">
+              <div class="resource">
+                <div class="value">{{plan?.data != -1 ? plan?.data+' GB' : 'unlimited'}}</div>
+                <div class="label">internet data</div>
+              </div>
+            </div>
+            <div *ngIf="plan?.dataEES" class="col-12">
+              <div class="resource">
+                <div class="value">{{plan?.dataEES != -1 ? plan?.dataEES+' GB' : 'unlimited'}}</div>
+                <div class="label">EES internet data</div>
+              </div>
+            </div>
+          </div>
+          <div class="buttons text-center">
+            <a routerLink="/{{plan.carrier}}/{{plan.id}}" class="btn btn-primary">Select plan</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

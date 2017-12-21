@@ -1,0 +1,15 @@
+<div *ngIf="person" class="thank-you-container {{carrier?.id}}">
+  <div *ngIf="carrier?.id" class="top">
+    <img src="/assets/images/{{carrier?.id}}.png"/>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="content">
+          <h1>{{person?.firstName}}, thank you for your order</h1>
+          <h2>A copy of the order was sent to {{person?.email}}.</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,163 @@
+@import (reference) '../../../mixins';
+@import (reference) '../../../variables';
+
+.checkout-container {
+	padding-bottom: 100px;
+	width: 100%;
+
+  .top {
+    height: 15vh;
+    padding: @padding;
+    position: relative;
+
+    img {
+      border:3px solid fade(@color-background, 20%);
+      border-radius: 13px;
+      left: 50%;
+      max-height: 70px;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%,-50%);
+    }
+  }
+
+	.cart {
+		border-bottom: 1px solid @color-border;
+
+		.plan, .option {
+			border-bottom: 1px solid @color-border;
+			padding: @padding;
+
+			.name, .price {
+				font-size: @font-size*1.125;
+				font-weight: normal;
+
+				@media (max-width: @breakpoint-xs) {
+					font-size: @font-size;
+				}
+			}
+
+			.details-toggler {
+				color: fade(@color-text, 70%);
+				cursor: pointer;
+				font-size: @font-size*0.875;
+
+				&:hover {
+					color: @color-text;
+				}
+			}
+
+			.details {
+				margin-top: @margin*0.5;
+				padding: 0;
+
+				li {
+					font-size: @font-size*0.875;
+					list-style-type: none;
+					padding: @padding*0.25;
+					text-align: left;
+
+					&:nth-child(even) {
+						background: lighten(@color-border, 10%);
+					}
+				}
+			}
+		}
+
+    .option {
+      padding-left: @padding;
+    }
+
+		.total {
+			background: lighten(@color-border, 10%);
+			color: fade(@color-text, 85%);
+			font-size: @font-size*1.125;
+			padding: @padding*0.5 0;
+		}
+	}
+
+  .personal-info {
+    margin-top: @margin;
+    
+    h1 {
+      color: fade(@color-text, 50%);
+      font-size: @font-size*1.25;
+      font-weight: normal;
+      line-height: 50px;
+      margin: 0;
+    }
+
+    .form-group {
+      margin: @margin*0.5 0 0 0;
+      position: relative;
+
+      &.text {
+        border: 1px solid @color-border;
+        border-radius: 3px;
+        cursor: text;
+        height: 40px;
+        margin-bottom: 0px;
+        padding: 0px;
+
+        & + .error-text {
+          padding-left: 15px;
+        }
+
+        input[type=email],
+        input[type=password],
+        input[type=text] {
+          &.form-control {
+            background: transparent;
+            border: none;
+            box-shadow: unset;
+            font-size: @font-size*0.875;
+            height: 40px;
+            left: 0px;
+            line-height: 25px;
+            padding: 13px 0 0 15px;
+            position: absolute;
+            top: 0px;
+            z-index: 20;
+
+            &:focus + label, &:valid + label {
+              font-size: @font-size*0.625;
+              line-height: 20px;
+            }
+          }
+        }
+
+        label {
+          color: fade(@color-text, 40%);
+          font-size: @font-size*0.75;
+          font-weight: 400;
+          left: 0px;
+          line-height: 40px;
+          position: absolute;
+          padding-left: 15px;
+          top: 0;
+          transition: all 0.1s ease-out;
+          z-index: 10;
+        }
+      }
+    }
+
+    .error-text {
+      color: @color-error;
+      font-size: @font-size*0.75;
+      margin-top: 3px;
+    }
+  }
+
+	.footer {
+		background: lighten(@color-border, 10%);
+		border-top: 1px solid @color-border;
+		bottom: 0;
+		padding: @padding;
+		position: fixed;
+		width: 100%;
+
+		.option {
+			font-size: @font-size*0.875;
+		}
+	}
+}

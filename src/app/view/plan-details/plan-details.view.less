@@ -1,0 +1,57 @@
+@import (reference) '../../../mixins';
+@import (reference) '../../../variables';
+
+.plan-details-container {
+	padding-bottom: 100px;
+	width: 100%;
+
+  .top {
+    height: 30vh;
+    padding: @padding;
+    position: relative;
+
+    img {
+      border:3px solid fade(@color-background, 20%);
+      border-radius: 13px;
+      left: 50%;
+      max-height: 70px;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%,-50%);
+    }
+  }
+
+  h1 {
+    font-size: @font-size*2;
+    font-weight: normal;
+    margin-bottom: 0;
+    padding: @padding*2 0 @padding 0;
+    text-align: center;
+
+    @media (max-width: @breakpoint-xs) {
+      font-size: @font-size*1.5;
+    }
+
+    .text-muted {
+      margin-top: @margin*0.25;
+      font-size: @font-size*1.125;
+    }
+  }
+
+  .resource {
+    text-align: center;
+  }
+
+	.footer {
+		background: lighten(@color-border, 10%);
+		border-top: 1px solid @color-border;
+		bottom: 0;
+		padding: @padding;
+		position: fixed;
+		width: 100%;
+
+		.option {
+			font-size: @font-size*0.875;
+		}
+	}
+}

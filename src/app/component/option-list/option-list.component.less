@@ -1,0 +1,55 @@
+@import (reference) '../../../variables';
+
+.option-list-container {
+  margin-top: @margin;
+
+  h3 {
+    color: fade(@color-text, 90%);
+    font-size: @font-size*1.25;
+    padding: @padding 0;
+    text-align: center;
+  }
+
+  .option {
+    border: 1px solid fade(@color-border, 50%);
+    border-radius: 25px;
+    cursor: pointer;
+    margin-bottom: @margin;
+    padding: @padding;
+    position: relative;
+
+    .checkbox {
+      border: 1px solid @color-border;
+      border-radius: 8px;
+      height: 16px;
+      position: absolute;
+      right: @padding + 16;
+      top: @padding + 7px;
+      width: 16px;
+
+      &::after {
+        content: '';
+        border-radius: 5px;
+        display: block;
+        height: 10px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 10px;
+      }
+    }
+
+    .name {
+      border-bottom: none;
+      font-size: @font-size*1.25;
+      padding: 0;
+      text-align: left;
+    }
+
+    .monthly-cost {
+      color: fade(@color-text, 70%);
+      font-size: @font-size*1;
+    }
+  }
+}

@@ -1,0 +1,52 @@
+<div *ngIf="carrier && plan" class="plan-details-container {{carrier?.id}}">
+  <div class="top">
+    <img src="/assets/images/{{carrier?.id}}.png"/>
+  </div>
+  <div class="container-fluid">
+    <div *ngIf="plan" class="row">
+      <div class="col-12">
+        <h1 class="name">{{plan?.name}}<p class="text-muted">{{plan?.monthlyCost}} EUR / month</p></h1>
+        <div class="row">
+          <div *ngIf="plan?.minutes" class="col-12 col-sm-6">
+            <div class="resource">
+              <div class="value">{{plan?.minutes != -1 ? plan?.minutes : 'unlimited'}}</div>
+              <div class="label">minutes</div>
+            </div>
+          </div>
+          <div *ngIf="plan?.minutesIntl" class="col-12 col-sm-6">
+            <div class="resource">
+              <div class="value">{{plan?.minutesIntl != -1 ? plan?.minutesIntl : 'unlimited'}}</div>
+              <div class="label">international minutes</div>
+            </div>
+          </div>
+          <div *ngIf="plan?.sms" class="col-12 col-sm-6">
+            <div class="resource">
+              <div class="value">{{plan?.sms != -1 ? plan?.sms : 'unlimited'}}</div>
+              <div class="label">messages</div>
+            </div>
+          </div>
+          <div *ngIf="plan?.data" class="col-12 col-sm-6">
+            <div class="resource">
+              <div class="value">{{plan?.data != -1 ? plan?.data+' GB' : 'unlimited'}}</div>
+              <div class="label">internet data</div>
+            </div>
+          </div>
+          <div *ngIf="plan?.dataEES" class="col-12 col-sm-6">
+            <div class="resource">
+              <div class="value">{{plan?.dataEES != -1 ? plan?.dataEES+' GB' : 'unlimited'}}</div>
+              <div class="label">EES internet data</div>
+            </div>
+          </div>
+        </div>
+        <option-list [planID]="plan?.id" (onSelect)="setOption($event)"></option-list>
+      </div>
+      <div class="col-12">
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <button (click)="buy()" class="btn-primary float-right">Proceed to checkout</button>
+    <div class="name">{{plan?.name}}</div>
+    <div class="option">{{option?.id ? '+ ' + option.name : 'with no add-on'}}</div>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+@import (reference) 'mixins';
+@import (reference) 'variables';
+
+body {
+  font-size: @font-size;
+  padding-top: @height-header;
+
+  menu {
+    margin: 0;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    border-radius:25px;
+    border: none;
+    font-size: @font-size*0.875;
+    line-height: 40px;
+    padding: 0px @padding;
+
+    &:active, &:focus {
+      box-shadow: none;
+    }
+  }
+
+  .resource {
+    background: fade(@color-border, 10%);
+    border-radius: 25px;
+    margin-top: @margin;
+    padding: @padding/2 @padding;
+
+    .value {
+      font-size: @font-size;
+      font-weight: bold;
+    }
+
+    .label {
+      color: fade(@color-text, 85%);
+      font-size: @font-size*0.875;
+    }
+  }
+
+  .color(orange, @color-orange);
+  .color(vodafone, @color-vodafone);
+  .color(telekom, @color-telekom);
+}
