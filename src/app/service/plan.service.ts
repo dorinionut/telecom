@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { HttpService } from './http.service';
+import { Plan } from '../model/plan.model';
 
 @Injectable()
 export class PlanService {
   private url = `${HttpService.baseURL}/plans`;
 
   constructor (
-    private http : HttpService<any>
+    private http : HttpService<Plan>
   ) {}
 
   get(id : string) {
@@ -15,6 +16,6 @@ export class PlanService {
   }
 
   list(queryParams : HttpParams) {
-    return this.http.get(this.url, queryParams);
+    return this.http.list(this.url, queryParams);
   }
 }

@@ -6,13 +6,13 @@ import { Carrier } from '../model/carrier.model';
 export class CarrierService {
   private url = `${HttpService.baseURL}/carriers`;
 
-  constructor ( private http : HttpService<any>) {}
+  constructor ( private http : HttpService<Carrier>) {}
 
   get(id : string) {
     return this.http.get(`${this.url}/${id}`);
   }
 
   list() {
-    return this.http.get(this.url);
+    return this.http.list(this.url);
   }
 }
