@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Plan } from '../../model/plan.model';
 import { PlanService } from '../../service/plan.service';
 import { CartService } from '../../service/cart.service';
+import { AppFacade } from 'app/store/app.facade';
 
 @Component({
   selector: 'plan-list',
@@ -18,10 +19,14 @@ export class PlanListView implements OnInit {
 
   constructor (
     private activatedRoute : ActivatedRoute,
+    private appFacade: AppFacade,
     private planService : PlanService,
-    private cartService : CartService,
     private router : Router
   ) {  }
+
+  addToCart(plan: Plan) {
+    this.appFacade.addPlan(plan);
+  }
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(paramMap => {

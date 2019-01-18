@@ -40,12 +40,10 @@
         </div>
         <option-list [planID]="plan?.id" (onSelect)="setOption($event)"></option-list>
       </div>
-      <div class="col-12">
-      </div>
     </div>
   </div>
   <div class="footer">
-    <button (click)="buy()" class="btn-primary float-right">Proceed to checkout</button>
+    <a routerLink="/checkout" class="btn-primary float-right">Proceed to checkout</a>
     <div class="name">{{plan?.name}}</div>
     <div class="option">{{option?.id ? '+ ' + option.name : 'with no add-on'}}</div>
   </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { filter, map } from 'rxjs/operators';
 
 import { Carrier } from '../../model/carrier.model';
 import { CarrierService } from '../../service/carrier.service';
@@ -8,6 +9,10 @@ import { CartService } from '../../service/cart.service';
 import { Option } from '../../model/option.model';
 import { Plan } from '../../model/plan.model';
 import { PlanService } from '../../service/plan.service';
+import { Store, select } from '@ngrx/store';
+import { IAppState } from 'app/model/app-state.interface';
+import { Observable } from 'rxjs';
+import { AppFacade } from 'app/store/app.facade';
 
 @Component({
   selector: 'plan-details',
@@ -22,22 +27,12 @@ export class PlanDetailsView implements OnInit {
 
   constructor (
     private activatedRoute : ActivatedRoute,
+    private appFacade: AppFacade,
     private planService : PlanService,
     private carrierService : CarrierService,
-    private cartService : CartService,
-    private router : Router
-  ) {  }
-
-  buy() {
-    this.cartService.carrier = this.carrier;
-    this.cartService.plan = this.plan;
-
-    if(this.option) {
-      this.cartService.option = this.option;
-    }
-
-    this.router.navigate(['checkout']);
-  }
+    private router : Router,
+    private store: Store<any>
+  ) {}
 
   ngOnInit() {
     let planID = '';
@@ -68,9 +63,17 @@ export class PlanDetailsView implements OnInit {
         this.router.navigate(['']);
       }
     });
+
+    this.store
+      .select('app')
+      .subscribe(state => {
+        if(state) {
+          this.option = state.option;
+        }
+      });
   }
 
-  setOption(value : Option) {
-    this.option = value;
+  setOption(option : Option) {
+    this.appFacade.addOption(option);
   }
 }

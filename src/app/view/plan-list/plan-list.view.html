@@ -42,7 +42,7 @@
             </div>
           </div>
           <div class="buttons text-center">
-            <a routerLink="/{{plan.carrier}}/{{plan.id}}" class="btn btn-primary">Select plan</a>
+            <a routerLink="/{{plan.carrier}}/{{plan.id}}" (click)="addToCart(plan)" class="btn btn-primary">Select plan</a>
           </div>
         </div>
       </div>

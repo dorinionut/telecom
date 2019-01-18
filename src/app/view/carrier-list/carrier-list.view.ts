@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { Carrier } from '../../model/carrier.model';
 import { CarrierService } from '../../service/carrier.service';
+import { AppFacade } from 'app/store/app.facade';
 
 @Component({
   selector: 'carrier-list',
@@ -14,6 +15,7 @@ export class CarrierListView implements OnInit {
   public carriers : Carrier[] = [];
 
   constructor (
+    private appFacade : AppFacade,
     private carrierService : CarrierService,
     private router : Router
   ) {  }
@@ -22,7 +24,7 @@ export class CarrierListView implements OnInit {
     this.carrierService.list().subscribe(carriers => this.carriers = carriers);
   }
 
-  openCarrierPage(id) {
-    this.router.navigate([`/${id}`]);
+  addToCart(carrier: Carrier) {
+    this.appFacade.addCarrier(carrier);
   }
 }
