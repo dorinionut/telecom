@@ -5,8 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { StoreModule } from "@ngrx/store"
-import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppComponent } from './app.component';
 import { CarrierService } from './service/carrier.service';
@@ -25,7 +25,7 @@ import { ThankYouView } from './view/thank-you/thank-you.view';
 
 import { routes } from './app.routing';
 import { AppReducers } from './store/app.reducer';
-import { AppFacade } from './store/app.facade';
+import { CartFacade } from './store/cart.facade';
 
 @NgModule({
   declarations: [
@@ -53,7 +53,7 @@ import { AppFacade } from './store/app.facade';
   ],
   providers: [
     HttpService,
-    AppFacade,
+    CartFacade,
     CarrierService,
     CartService,
     OptionService,

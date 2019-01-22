@@ -1,6 +1,6 @@
-<div class="plan-list-container {{carrierID}}">
+<div *ngIf="carrier && plans" class="plan-list-container {{carrier?.id}}">
   <div class="top">
-    <img src="/assets/images/{{carrierID}}.png"/>
+    <img src="/assets/images/{{carrier?.id}}.png"/>
   </div>
   <div class="container-fluid">
     <h1>Select your plan</h1>

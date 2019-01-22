@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { Carrier } from '../../model/carrier.model';
 import { CarrierService } from '../../service/carrier.service';
-import { AppFacade } from 'app/store/app.facade';
+import { CartFacade } from 'app/store/cart.facade';
 
 @Component({
   selector: 'carrier-list',
@@ -15,16 +14,18 @@ export class CarrierListView implements OnInit {
   public carriers : Carrier[] = [];
 
   constructor (
-    private appFacade : AppFacade,
-    private carrierService : CarrierService,
-    private router : Router
+    private cartFacade : CartFacade,
+    private carrierService : CarrierService
   ) {  }
 
   ngOnInit() {
-    this.carrierService.list().subscribe(carriers => this.carriers = carriers);
+    this.cartFacade.clear();
+    this.carrierService
+      .list()
+      .subscribe(carriers => this.carriers = carriers);
   }
 
   addToCart(carrier: Carrier) {
-    this.appFacade.addCarrier(carrier);
+    this.cartFacade.addCarrier(carrier);
   }
 }

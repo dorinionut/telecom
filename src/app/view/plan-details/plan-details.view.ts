@@ -1,18 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { filter, map } from 'rxjs/operators';
 
 import { Carrier } from '../../model/carrier.model';
 import { CarrierService } from '../../service/carrier.service';
-import { CartService } from '../../service/cart.service';
 import { Option } from '../../model/option.model';
 import { Plan } from '../../model/plan.model';
 import { PlanService } from '../../service/plan.service';
-import { Store, select } from '@ngrx/store';
-import { IAppState } from 'app/model/app-state.interface';
-import { Observable } from 'rxjs';
-import { AppFacade } from 'app/store/app.facade';
+import { CartFacade } from 'app/store/cart.facade';
+import { ICartState } from 'app/model/cart.interface';
+import { Store } from '@ngrx/store';
+import { concat } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'plan-details',
@@ -27,11 +25,11 @@ export class PlanDetailsView implements OnInit {
 
   constructor (
     private activatedRoute : ActivatedRoute,
-    private appFacade: AppFacade,
+    private cartFacade: CartFacade,
     private planService : PlanService,
     private carrierService : CarrierService,
     private router : Router,
-    private store: Store<any>
+    private store : Store<ICartState>
   ) {}
 
   ngOnInit() {
@@ -43,21 +41,30 @@ export class PlanDetailsView implements OnInit {
       planID = paramMap.get('planID');
 
       if(planID && carrierID) {
-        let queryParams = new HttpParams()
-          .append('id', planID)
-          .append('carrier', carrierID);
-
-        this.planService.list(queryParams).subscribe(plans => {
-          if(plans.length) {
-            this.plan = plans[0];
-          }
-          else {
-            this.router.navigate(['']);
-          }
-        },
-        err => this.router.navigate(['']));
-
-        this.carrierService.get(carrierID).subscribe(carrier => this.carrier = carrier);
+        this.carrierService
+          .get(carrierID)
+          .pipe(
+            switchMap(carrier => {
+              if(carrier){
+                this.carrier = carrier;
+                this.cartFacade.addCarrier(this.carrier);
+              }
+              else {
+                this.router.navigate(['']);
+              }
+              
+              return this.planService.get(planID);
+            })
+          )
+          .subscribe(plan => {
+            if(plan){
+              this.plan = plan;
+              this.cartFacade.addPlan(this.plan);
+            }
+            else {
+              this.router.navigate(['']);
+            }
+        });
       }
       else {
         this.router.navigate(['']);
@@ -65,7 +72,7 @@ export class PlanDetailsView implements OnInit {
     });
 
     this.store
-      .select('app')
+      .select('cart')
       .subscribe(state => {
         if(state) {
           this.option = state.option;
@@ -74,6 +81,6 @@ export class PlanDetailsView implements OnInit {
   }
 
   setOption(option : Option) {
-    this.appFacade.addOption(option);
+    this.cartFacade.addOption(option);
   }
 }

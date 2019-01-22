@@ -1,5 +1,5 @@
-<div *ngIf="plan" class="checkout-container {{carrier?.id}}">
-  <div *ngIf="carrier?.id" class="top">
+<div *ngIf="carrier?.id && plan" class="checkout-container {{carrier?.id}}">
+  <div class="top">
     <img src="/assets/images/{{carrier?.id}}.png"/>
   </div>
   <div class="container-fluid cart">
@@ -56,28 +56,28 @@
           <div class="row">
             <div class="col-12 col-sm-12 col-md-6">
               <div class="form-group text">
-                <input [(ngModel)]="person.firstName" [attr.required]="false" type="text" id="first-name" class="form-control" formControlName="firstName">
+                <input [(ngModel)]="person.firstName" [attr.required]="false" type="text" id="first-name" class="form-control" [formControlName]="firstName">
                 <label for="first-name">First name</label>
               </div>
               <div [hidden]="personalInfo.controls.firstName.valid || personalInfo.controls.firstName.pristine" class="error-text">Please fill in first name</div>
             </div>
             <div class="col-12 col-sm-12 col-md-6">
               <div class="form-group text">
-                <input [(ngModel)]="person.lastName" [attr.required]="false" type="text" id="last-name" class="form-control" formControlName="lastName">
+                <input [(ngModel)]="person.lastName" [attr.required]="false" type="text" id="last-name" class="form-control" [formControlName]="lastName">
                 <label for="last-name">Last name</label>
               </div>
               <div [hidden]="personalInfo.controls.lastName.valid || personalInfo.controls.lastName.pristine" class="error-text">Please fill in last name</div>
             </div>
             <div class="col-12 col-sm-12 col-md-6">
               <div class="form-group text">
-                <input [(ngModel)]="person.email" [attr.required]="false" type="text" id="email" class="form-control" formControlName="email">
+                <input [(ngModel)]="person.email" [attr.required]="false" type="text" id="email" class="form-control" [formControlName]="email">
                 <label for="email">Email</label>
               </div>
               <div [hidden]="personalInfo.controls.email.valid || personalInfo.controls.email.pristine" class="error-text">Please fill in a valid email address</div>
             </div>
             <div class="col-12 col-sm-12 col-md-6">
               <div class="form-group text">
-                <input [(ngModel)]="person.phone" [attr.required]="false" type="text" id="current-phone" class="form-control" formControlName="phone">
+                <input [(ngModel)]="person.phone" [attr.required]="false" type="text" id="current-phone" class="form-control" [formControlName]="phone">
                 <label for="current-phone">Current phone number (optional)</label>
               </div>
             </div>

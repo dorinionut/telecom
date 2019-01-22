@@ -21,9 +21,9 @@ export class ThankYouView implements OnInit {
   ) { }
 
   ngOnInit() {
-    if(this.cartService.carrier && this.cartService.person) {
-      this.carrier = this.cartService.carrier;
-      this.person = this.cartService.person;
+    if(this.cartService.getCarrier() && this.cartService.getPerson()) {
+      this.carrier = this.cartService.getCarrier();
+      this.person = this.cartService.getPerson();
     }
     else {
       this.router.navigate(['']);

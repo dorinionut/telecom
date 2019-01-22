@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from "@ngrx/store";
 
+import { ICartState } from "../../model/cart.interface";
 import { Carrier } from '../../model/carrier.model';
 import { CartService } from '../../service/cart.service';
 import { emailValidator } from '../../util/email.validator';
@@ -29,7 +30,8 @@ export class CheckoutView implements OnInit {
   constructor (
     private formBuilder : FormBuilder,
     private cartService : CartService,
-    private router : Router
+    private router : Router,
+    private store: Store<ICartState>
   ) {
     this.personalInfo = formBuilder.group({
       'firstName': [null, Validators.required],
@@ -44,19 +46,19 @@ export class CheckoutView implements OnInit {
   }
 
   ngOnInit() {
-    if(this.cartService.carrier && this.cartService.plan) {
-      this.carrier = this.cartService.carrier;
-      this.plan = this.cartService.plan;
-
-      if(this.cartService.option) {
-        this.option = this.cartService.option;
-      }
-
-      this.updateTotalMonthlyCost();
-    }
-    else {
-      this.router.navigate(['']);
-    }
+    this.store
+      .select('cart')
+      .subscribe(state => {
+        if(state) {
+          this.carrier = state.carrier;
+          this.plan = state.plan;
+          this.option = state.option;
+          this.updateTotalMonthlyCost();
+        }
+        else {
+          this.router.navigate(['']);
+        }
+      });
   }
 
   submitOrder() {
@@ -65,7 +67,10 @@ export class CheckoutView implements OnInit {
     }
 
     if(this.personalInfo.valid) {
-      this.cartService.person = this.person;
+      this.cartService.setCarrier(this.carrier);
+      this.cartService.setPlan(this.plan);
+      this.cartService.setOption(this.option);
+      this.cartService.setPerson(this.person);
       this.router.navigate(['thank-you']);
     }
   }

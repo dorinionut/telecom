@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 
 import { Plan } from '../../model/plan.model';
+import { CarrierService } from '../../service/carrier.service';
 import { PlanService } from '../../service/plan.service';
-import { CartService } from '../../service/cart.service';
-import { AppFacade } from 'app/store/app.facade';
+import { CartFacade } from 'app/store/cart.facade';
+import { Carrier } from 'app/model/carrier.model';
 
 @Component({
   selector: 'plan-list',
@@ -14,29 +16,53 @@ import { AppFacade } from 'app/store/app.facade';
 })
 export class PlanListView implements OnInit {
 
-  public carrierID : string;
+  public carrier : Carrier;
   public plans : Plan[] = [];
 
   constructor (
     private activatedRoute : ActivatedRoute,
-    private appFacade: AppFacade,
+    private carrierService: CarrierService,
+    private cartFacade: CartFacade,
     private planService : PlanService,
     private router : Router
   ) {  }
 
   addToCart(plan: Plan) {
-    this.appFacade.addPlan(plan);
+    this.cartFacade.addPlan(plan);
   }
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(paramMap => {
       if(paramMap.get('carrierID')) {
-        this.carrierID = paramMap.get('carrierID');
+        let carrierID = paramMap.get('carrierID');
+        let queryParams = new HttpParams().append('carrier', carrierID);
 
-        this.planService.list(new HttpParams().append('carrier', this.carrierID)).subscribe(plans => this.plans = plans);
+        this.carrierService
+          .get(carrierID)
+          .pipe(
+            switchMap(carrier => {
+              if(carrier){
+                this.carrier = carrier;
+                this.cartFacade.addCarrier(this.carrier);
+              }
+              else {
+                this.router.navigate(['']);
+              }
+
+              return this.planService.list(queryParams);
+            })
+          )
+          .subscribe(plans => {
+            if(plans.length){
+              this. plans = plans;
+            }
+            else {
+              this.router.navigate(['']);
+            }
+          })
       }
       else {
-        this.router.navigate(['carriers']);
+        this.router.navigate(['']);
       }
     });
   }
