@@ -38,13 +38,13 @@
             </div>
           </div>
         </div>
-        <option-list [planID]="plan?.id" (onSelect)="setOption($event)"></option-list>
+        <app-option-list [planID]="plan?.id" (onSelect)="setOption($event)"></app-option-list>
       </div>
     </div>
   </div>
   <div class="footer">
     <a routerLink="/checkout" class="btn-primary float-right">Proceed to checkout</a>
     <div class="name">{{plan?.name}}</div>
-    <div class="option">{{option?.id ? '+ ' + option.name : 'with no add-on'}}</div>
+    <div class="option">{{option ? '+ ' + option.name : 'with no add-on'}}</div>
   </div>
 </div>

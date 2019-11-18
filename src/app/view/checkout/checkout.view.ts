@@ -1,55 +1,56 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Store } from "@ngrx/store";
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
-import { ICartState } from "../../model/cart.interface";
-import { Carrier } from '../../model/carrier.model';
-import { CartService } from '../../service/cart.service';
+import { ICarrier } from '../../model/carrier.interface';
 import { emailValidator } from '../../util/email.validator';
-import { Option } from '../../model/option.model';
-import { Person } from '../../model/person.model';
-import { Plan } from '../../model/plan.model';
+import { IOption } from '../../model/option.interface';
+import { IPlan } from '../../model/plan.interface';
+import { CartFacade } from 'app/store/cart.facade';
 
 @Component({
-  selector: 'checkout',
+  selector: 'app-checkout',
   templateUrl: 'checkout.view.html',
   styleUrls: ['checkout.view.less']
 })
-export class CheckoutView implements OnInit {
+export class CheckoutViewComponent implements OnInit, OnDestroy {
 
-  private carrier : Carrier;
-  public plan : Plan;
-  private person : Person = new Person();
-  private personalInfo: FormGroup;
-  public option : Option;
-  private totalMonthlyCost : number;
-  private showOptionDetails : false;
-  private showPlanDetails : false;
+  public carrier: ICarrier;
+  public option: IOption;
+  public personForm: FormGroup;
+  public plan: IPlan;
+  public showPlanDetails: boolean = false;
+  public showOptionDetails: boolean = false;
+  public totalMonthlyCost: number;
+
+  private destroyed$: Subject<any> = new Subject();
 
   constructor (
-    private formBuilder : FormBuilder,
-    private cartService : CartService,
-    private router : Router,
-    private store: Store<ICartState>
-  ) {
-    this.personalInfo = formBuilder.group({
-      'firstName': [null, Validators.required],
-      'lastName': [null, Validators.required],
-      'email': [null, [
+    private formBuilder: FormBuilder,
+    private cartFacade: CartFacade,
+    private router: Router
+  ) {}
+
+  ngOnInit() {
+    this.personForm = this.formBuilder.group({
+      firstName: [null, Validators.required],
+      lastName: [null, Validators.required],
+      email: [null, [
           Validators.required,
           emailValidator
         ]
       ],
-      'phone': [null]
+      phone: [null]
     });
-  }
 
-  ngOnInit() {
-    this.store
-      .select('cart')
+    this.cartFacade.getCart()
+      .pipe(
+        takeUntil(this.destroyed$)
+      )
       .subscribe(state => {
-        if(state) {
+        if (state) {
           this.carrier = state.carrier;
           this.plan = state.plan;
           this.option = state.option;
@@ -61,23 +62,35 @@ export class CheckoutView implements OnInit {
       });
   }
 
+  ngOnDestroy() {
+    this.destroyed$.next();
+    this.destroyed$.complete();
+  }
+
   submitOrder() {
-    for(let control in this.personalInfo.controls) {
-      this.personalInfo.controls[control].markAsDirty();
+    for (const control in this.personForm.controls) {
+      if (this.personForm.hasOwnProperty(control)) {
+        this.personForm.controls[control].markAsDirty();
+      }
     }
 
-    if(this.personalInfo.valid) {
-      this.cartService.setCarrier(this.carrier);
-      this.cartService.setPlan(this.plan);
-      this.cartService.setOption(this.option);
-      this.cartService.setPerson(this.person);
+    if (this.personForm.valid) {
+      this.cartFacade.addPerson(this.personForm.value);
       this.router.navigate(['thank-you']);
     }
   }
 
+  toggleOptionDetails() {
+    this.showOptionDetails = !this.showOptionDetails;
+  }
+
+  togglePlanDetails() {
+    this.showPlanDetails = !this.showPlanDetails;
+  }
+
   updateTotalMonthlyCost() {
-    if(this.plan) {
-      this.totalMonthlyCost = (this.option) ? this.option.monthlyCost + this.plan.monthlyCost : this.plan.monthlyCost
+    if (this.plan) {
+      this.totalMonthlyCost = (this.option) ? this.option.monthlyCost + this.plan.monthlyCost : this.plan.monthlyCost;
     }
   }
 }

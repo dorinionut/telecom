@@ -1,41 +1,37 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
-import { Option } from '../../model/option.model';
+import { IOption } from '../../model/option.interface';
 import { OptionService } from '../../service/option.service';
 
 @Component({
-  selector: 'option-list',
+  selector: 'app-option-list',
   templateUrl: 'option-list.component.html',
   styleUrls: ['option-list.component.less']
 })
 export class OptionListComponent implements OnInit {
 
-  @Output('onSelect')
-  private onSelect : EventEmitter<any> = new EventEmitter();
-  public options : Option[] = [];
+  @Output()
+  private onSelect: EventEmitter<any> = new EventEmitter();
+
+  public options: IOption[] = [];
+
   @Input()
-  private planID : string;
-  public selectedOptionID : string;
+  private planID: string;
+
+  public selectedOption: IOption;
 
   constructor (
-    private optionService : OptionService
+    private optionService: OptionService
   ) {  }
 
   ngOnInit() {
-    this.optionService.list(new HttpParams().append('plans', this.planID)).subscribe(options => this.options = options);
+    this.optionService.list(new HttpParams().append('plans', this.planID))
+      .subscribe(options => this.options = options);
   }
 
-  selectOption(id: string) {
-    if(this.selectedOptionID != id) {
-      this.selectedOptionID = id;
-
-      let selectedOption = this.options.filter(option => option.id == id)[0];
-      this.onSelect.emit(selectedOption);
-    }
-    else {
-      this.selectedOptionID = '';
-      this.onSelect.emit(null);
-    }
+  selectOption(option: IOption) {
+    this.selectedOption = option;
+    this.onSelect.emit(this.selectedOption);
   }
 }

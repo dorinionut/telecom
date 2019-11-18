@@ -1,32 +1,48 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
-import { Carrier } from '../../model/carrier.model';
-import { CartService } from '../../service/cart.service';
-import { Person } from '../../model/person.model';
+import { ICarrier } from '../../model/carrier.interface';
+import { ICartState } from 'app/model/cart.interface';
+import { IPerson } from '../../model/person.interface';
+import { CartFacade } from 'app/store/cart.facade';
 
 @Component({
-  selector: 'thank-you',
+  selector: 'app-thank-you',
   templateUrl: 'thank-you.view.html',
   styleUrls: ['thank-you.view.less']
 })
-export class ThankYouView implements OnInit {
+export class ThankYouViewComponent implements OnInit, OnDestroy {
 
-  public carrier : Carrier;
-  public person : Person;
+  public carrier: ICarrier;
+  public person: IPerson;
+
+  private destroyed$: Subject<any> = new Subject();
 
   constructor (
-    private cartService : CartService,
-    private router : Router
+    private cartFacade: CartFacade,
+    private router: Router
   ) { }
 
   ngOnInit() {
-    if(this.cartService.getCarrier() && this.cartService.getPerson()) {
-      this.carrier = this.cartService.getCarrier();
-      this.person = this.cartService.getPerson();
-    }
-    else {
-      this.router.navigate(['']);
-    }
+    this.cartFacade.getCart()
+      .pipe(
+        takeUntil(this.destroyed$)
+      )
+      .subscribe((cart: ICartState) => {
+        if (cart) {
+          this.carrier = cart.carrier;
+          this.person = cart.person;
+        }
+        else {
+          this.router.navigate(['']);
+        }
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
 }

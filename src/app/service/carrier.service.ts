@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './http.service';
-import { Carrier } from '../model/carrier.model';
+import { ICarrier } from '../model/carrier.interface';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class CarrierService {
   private url = `${HttpService.baseURL}/carriers`;
 
-  constructor ( private http : HttpService<Carrier>) {}
+  constructor ( private http: HttpService<ICarrier>) {}
 
-  get(id : string) {
+  get(id: string) {
     return this.http.get(`${this.url}/${id}`);
   }
 

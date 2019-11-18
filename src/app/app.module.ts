@@ -9,34 +9,28 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppComponent } from './app.component';
-import { CarrierService } from './service/carrier.service';
-import { CartService } from './service/cart.service';
-import { CarrierListView } from './view/carrier-list/carrier-list.view';
-import { CheckoutView } from './view/checkout/checkout.view';
+import { CarrierListViewComponent } from './view/carrier-list/carrier-list.view';
+import { CheckoutViewComponent } from './view/checkout/checkout.view';
 import { DataService } from './service/data.service';
-import { HttpService } from './service/http.service';
 import { MenuComponent } from './component/menu/menu.component';
-import { OptionService } from './service/option.service';
 import { OptionListComponent } from './component/option-list/option-list.component';
-import { PlanService } from './service/plan.service';
-import { PlanDetailsView } from './view/plan-details/plan-details.view';
-import { PlanListView } from './view/plan-list/plan-list.view';
-import { ThankYouView } from './view/thank-you/thank-you.view';
+import { PlanDetailsViewComponent } from './view/plan-details/plan-details.view';
+import { PlanListViewComponent } from './view/plan-list/plan-list.view';
+import { ThankYouViewComponent } from './view/thank-you/thank-you.view';
 
 import { routes } from './app.routing';
 import { AppReducers } from './store/app.reducer';
-import { CartFacade } from './store/cart.facade';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CarrierListView,
-    CheckoutView,
+    CarrierListViewComponent,
+    CheckoutViewComponent,
     MenuComponent,
     OptionListComponent,
-    PlanDetailsView,
-    PlanListView,
-    ThankYouView
+    PlanDetailsViewComponent,
+    PlanListViewComponent,
+    ThankYouViewComponent
   ],
   imports: [
     BrowserModule,
@@ -51,14 +45,7 @@ import { CartFacade } from './store/cart.facade';
       maxAge: 25
     })
   ],
-  providers: [
-    HttpService,
-    CartFacade,
-    CarrierService,
-    CartService,
-    OptionService,
-    PlanService
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

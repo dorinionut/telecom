@@ -1,9 +1,11 @@
-import { Plan } from './plan.model';
-import { Carrier } from './carrier.model';
-import { Option } from './option.model';
+import { IPlan } from './plan.interface';
+import { ICarrier } from './carrier.interface';
+import { IOption } from './option.interface';
+import { IPerson } from './person.interface';
 
 export interface ICartState {
-    carrier: Carrier;
-    plan: Plan;
-    option: Option;
+    carrier: ICarrier;
+    plan: IPlan;
+    option: IOption;
+    person: IPerson;
 }

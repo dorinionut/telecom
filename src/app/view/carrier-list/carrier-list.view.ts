@@ -1,31 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Carrier } from '../../model/carrier.model';
+import { ICarrier } from '../../model/carrier.interface';
 import { CarrierService } from '../../service/carrier.service';
 import { CartFacade } from 'app/store/cart.facade';
 
 @Component({
-  selector: 'carrier-list',
+  selector: 'app-carrier-list',
   templateUrl: 'carrier-list.view.html',
   styleUrls: ['carrier-list.view.less']
 })
-export class CarrierListView implements OnInit {
+export class CarrierListViewComponent implements OnInit {
 
-  public carriers : Carrier[] = [];
+  public carriers: ICarrier[] = [];
 
   constructor (
-    private cartFacade : CartFacade,
-    private carrierService : CarrierService
+    private cartFacade: CartFacade,
+    private carrierService: CarrierService
   ) {  }
 
   ngOnInit() {
     this.cartFacade.clear();
+
     this.carrierService
       .list()
       .subscribe(carriers => this.carriers = carriers);
   }
 
-  addToCart(carrier: Carrier) {
+  addToCart(carrier: ICarrier) {
     this.cartFacade.addCarrier(carrier);
   }
 }

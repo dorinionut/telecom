@@ -1,27 +1,28 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 
-import { Carrier } from '../../model/carrier.model';
+import { ICarrier } from '../../model/carrier.interface';
 import { CarrierService } from '../../service/carrier.service';
 
 @Component({
   host : {'(document:click)': 'checkFocus($event)'},
-  selector: 'menu',
+  selector: 'app-menu',
   templateUrl: 'menu.component.html',
   styleUrls: ['menu.component.less']
 })
 export class MenuComponent implements OnInit {
-  public elementRef;
   public menuVisible = false;
-  public carriers : Carrier[];
+  public carriers: ICarrier[];
 
   constructor(
-    private carrierService : CarrierService,
-    private thisElement : ElementRef
-  ) {
-    this.elementRef = thisElement;
+    private carrierService: CarrierService,
+    private elementRef: ElementRef
+  ) { }
+
+  ngOnInit() {
+    this.carrierService.list().subscribe(carriers => this.carriers = carriers);
   }
 
-  checkFocus(event){
+  checkFocus(event) {
     let clickedComponent = event.target;
     let inside = false;
 
@@ -33,12 +34,12 @@ export class MenuComponent implements OnInit {
     }
     while (clickedComponent);
 
-    if(!inside){
+    if (!inside) {
       this.menuVisible = false;
     }
   }
 
-  ngOnInit() {
-    this.carrierService.list().subscribe(carriers => this.carriers = carriers);
+  toggleMenuVisibility() {
+    this.menuVisible = !this.menuVisible;
   }
 }

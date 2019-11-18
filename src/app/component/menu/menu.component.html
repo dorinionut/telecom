@@ -1,10 +1,10 @@
 <div class="header">
-  <div (click)="menuVisible = !menuVisible" class="menu-trigger">
+  <div (click)="toggleMenuVisibility()" class="menu-trigger">
     <span class="line"></span>
     <span class="line"></span>
     <span class="line"></span>
   </div>
   <ul [hidden]="!menuVisible" class="menu">
-    <li *ngFor="let carrier of carriers" routerLink="{{carrier.id}}" (click)="menuVisible = !menuVisible"><img src="/assets/images/{{carrier.id}}.png"/> {{carrier.name}}</li>
+    <li *ngFor="let carrier of carriers" routerLink="{{carrier.id}}" (click)="toggleMenuVisibility()"><img src="/assets/images/{{carrier.id}}.png"/> {{carrier.name}}</li>
   </ul>
 </div>

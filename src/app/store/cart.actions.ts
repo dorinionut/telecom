@@ -1,39 +1,23 @@
-import { Action } from '@ngrx/store';
-import { Carrier } from 'app/model/carrier.model';
-import { Plan } from 'app/model/plan.model';
-import { Option } from 'app/model/option.model';
+import { createAction, props } from '@ngrx/store';
+import { ICarrier } from 'app/model/carrier.interface';
+import { IPlan } from 'app/model/plan.interface';
+import { IOption } from 'app/model/option.interface';
+import { IPerson } from 'app/model/person.interface';
 
-export enum CartActionsType {
-    addCarrier = '[Cart] Add carrier',
-    addPlan = '[Cart] Add plan',
-    addOption = '[Cart] Add option',
-    clear = '[Cart] Clear cart'
-}
+export const addCarrier = createAction('[Cart] Add carrier',
+    props<{carrier: ICarrier}>()
+)
 
-export class addCarrier implements Action {
-    readonly type = CartActionsType.addCarrier;
+export const addPlan = createAction('[Cart] Add plan',
+    props<{plan: IPlan}>()
+)
 
-    constructor(public payload: Carrier){}
-}
+export const addOption = createAction('[Cart] Add option',
+    props<{option: IOption}>()
+)
 
-export class addPlan implements Action {
-    readonly type = CartActionsType.addPlan;
+export const addPerson = createAction('[Cart] Add person',
+    props<{person: IPerson}>()
+)
 
-    constructor(public payload: Plan){}
-}
-
-export class addOption implements Action {
-    readonly type = CartActionsType.addOption;
-
-    constructor(public payload: Option){}
-}
-
-export class clear implements Action {
-    readonly type = CartActionsType.clear;
-}
-
-export type CartActions =
-    | addCarrier
-    | addPlan
-    | addOption
-    | clear;
+export const clear = createAction('[Cart] Clear cart')
