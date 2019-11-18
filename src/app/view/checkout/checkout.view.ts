@@ -68,11 +68,8 @@ export class CheckoutViewComponent implements OnInit, OnDestroy {
   }
 
   submitOrder() {
-    for (const control in this.personForm.controls) {
-      if (this.personForm.hasOwnProperty(control)) {
-        this.personForm.controls[control].markAsDirty();
-      }
-    }
+    const controlNames = Object.keys(this.personForm.controls);
+    controlNames.forEach((control: string) => this.personForm.get(control).markAsDirty());
 
     if (this.personForm.valid) {
       this.cartFacade.addPerson(this.personForm.value);

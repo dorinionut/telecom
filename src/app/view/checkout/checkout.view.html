@@ -64,7 +64,7 @@
                   formControlName="firstName"/>
                 <label for="first-name">First name</label>
               </div>
-              <div [hidden]="personForm.controls.firstName.valid || personForm.controls.firstName.pristine" class="error-text">Please fill in first name</div>
+              <div [hidden]="personForm.get('firstName').valid || personForm.get('firstName').pristine" class="error-text">Please fill in first name</div>
             </div>
             <div class="col-12 col-sm-12 col-md-6">
               <div class="form-group text">
@@ -76,7 +76,7 @@
                   formControlName="lastName"/>
                 <label for="last-name">Last name</label>
               </div>
-              <div [hidden]="personForm.controls.lastName.valid || personForm.controls.lastName.pristine" class="error-text">Please fill in last name</div>
+              <div [hidden]="personForm.get('lastName').valid || personForm.get('lastName').pristine" class="error-text">Please fill in last name</div>
             </div>
             <div class="col-12 col-sm-12 col-md-6">
               <div class="form-group text">
@@ -88,7 +88,7 @@
                   formControlName="email"/>
                 <label for="email">Email</label>
               </div>
-              <div [hidden]="personForm.controls.email.valid || personForm.controls.email.pristine" class="error-text">Please fill in a valid email address</div>
+              <div [hidden]="personForm.get('email').valid || personForm.get('email').pristine" class="error-text">Please fill in a valid email address</div>
             </div>
             <div class="col-12 col-sm-12 col-md-6">
               <div class="form-group text">
