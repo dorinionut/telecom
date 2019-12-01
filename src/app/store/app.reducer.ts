@@ -1,7 +1,7 @@
 import { ActionReducerMap } from '@ngrx/store';
 
 import { cartReducer } from './cart.reducer';
-import { ICartState } from 'app/model/cart.interface';
+import { ICartState } from '@app/model/cart.interface';
 
 export interface ITelecomStore {
     cart: ICartState;

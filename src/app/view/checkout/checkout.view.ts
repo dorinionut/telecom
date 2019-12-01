@@ -8,7 +8,7 @@ import { ICarrier } from '../../model/carrier.interface';
 import { emailValidator } from '../../util/email.validator';
 import { IOption } from '../../model/option.interface';
 import { IPlan } from '../../model/plan.interface';
-import { CartFacade } from 'app/store/cart.facade';
+import { CartFacade } from '@app/store/cart.facade';
 
 @Component({
   selector: 'app-checkout',

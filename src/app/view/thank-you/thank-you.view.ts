@@ -4,9 +4,9 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { ICarrier } from '../../model/carrier.interface';
-import { ICartState } from 'app/model/cart.interface';
+import { ICartState } from '@app/model/cart.interface';
 import { IPerson } from '../../model/person.interface';
-import { CartFacade } from 'app/store/cart.facade';
+import { CartFacade } from '@app/store/cart.facade';
 
 @Component({
   selector: 'app-thank-you',

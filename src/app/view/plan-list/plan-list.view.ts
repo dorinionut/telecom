@@ -4,10 +4,10 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { zip } from 'rxjs';
 
 import { IPlan } from '../../model/plan.interface';
-import { ICarrier } from 'app/model/carrier.interface';
+import { ICarrier } from '@app/model/carrier.interface';
 import { CarrierService } from '../../service/carrier.service';
 import { PlanService } from '../../service/plan.service';
-import { CartFacade } from 'app/store/cart.facade';
+import { CartFacade } from '@app/store/cart.facade';
 
 @Component({
   selector: 'app-plan-list',

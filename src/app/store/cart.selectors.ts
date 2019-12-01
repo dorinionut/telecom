@@ -1,5 +1,5 @@
 import { ITelecomStore } from './app.reducer';
-import { ICartState } from 'app/model/cart.interface';
+import { ICartState } from '@app/model/cart.interface';
 import { createSelector } from '@ngrx/store';
 
 export const selectCart = (state: ITelecomStore) => state.cart;

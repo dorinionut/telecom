@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { ICarrier } from '../../model/carrier.interface';
 import { CarrierService } from '../../service/carrier.service';
-import { CartFacade } from 'app/store/cart.facade';
+import { CartFacade } from '@app/store/cart.facade';
 
 @Component({
   selector: 'app-carrier-list',

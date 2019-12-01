@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { ICartState } from 'app/model/cart.interface';
-import { ICarrier } from 'app/model/carrier.interface';
-import { IPlan } from 'app/model/plan.interface';
-import { IOption } from 'app/model/option.interface';
+import { ICartState } from '@app/model/cart.interface';
+import { ICarrier } from '@app/model/carrier.interface';
+import { IPlan } from '@app/model/plan.interface';
+import { IOption } from '@app/model/option.interface';
 import * as CartActions from './cart.actions';
 import { selectCart, selectPlan, selectOption, selectPerson } from './cart.selectors';
 import { Observable } from 'rxjs';
-import { IPerson } from 'app/model/person.interface';
+import { IPerson } from '@app/model/person.interface';
 import { ITelecomStore } from './app.reducer';
 
 @Injectable({

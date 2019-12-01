@@ -6,7 +6,7 @@ import { CarrierService } from '../../service/carrier.service';
 import { IOption } from '../../model/option.interface';
 import { IPlan } from '../../model/plan.interface';
 import { PlanService } from '../../service/plan.service';
-import { CartFacade } from 'app/store/cart.facade';
+import { CartFacade } from '@app/store/cart.facade';
 import { zip, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

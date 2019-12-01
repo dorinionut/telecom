@@ -1,8 +1,8 @@
 import { createAction, props } from '@ngrx/store';
-import { ICarrier } from 'app/model/carrier.interface';
-import { IPlan } from 'app/model/plan.interface';
-import { IOption } from 'app/model/option.interface';
-import { IPerson } from 'app/model/person.interface';
+import { ICarrier } from '@app/model/carrier.interface';
+import { IPlan } from '@app/model/plan.interface';
+import { IOption } from '@app/model/option.interface';
+import { IPerson } from '@app/model/person.interface';
 
 export const addCarrier = createAction('[Cart] Add carrier',
     props<{carrier: ICarrier}>()
